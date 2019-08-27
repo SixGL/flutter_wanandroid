@@ -1,6 +1,8 @@
 # first_flutter_app
+  适合新手从学习入门flutter到实战项目的学习
+# Api
+  基于鸿洋大佬的wanandroid开放Api
 
-A new Flutter application.
 
 ## Getting Started
 
