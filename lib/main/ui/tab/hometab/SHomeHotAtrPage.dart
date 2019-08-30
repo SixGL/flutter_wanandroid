@@ -2,8 +2,10 @@ import 'package:first_flutter_app/entity_factory.dart';
 import 'package:first_flutter_app/main/Http/SHttp.dart';
 import 'package:first_flutter_app/main/Http/SLog.dart';
 import 'package:first_flutter_app/main/m/atr_bean_entity.dart';
+import 'package:first_flutter_app/main/m/banner_entity.dart';
 import 'package:first_flutter_app/main/util/Style.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_swiper/flutter_swiper.dart';
 
 class HomeAtrContentPage extends StatefulWidget {
   @override
@@ -20,6 +22,8 @@ class HomeAtrState extends State with AutomaticKeepAliveClientMixin {
   bool get wantKeepAlive => true;
 
   List<AtrBeanDataData> _listAtrData = new List();
+  List<BannerData> _listBannerData = new List();
+  List<Widget> _listBannerWeiget = new List();
 
   ScrollController _toSontroller = ScrollController();
 
@@ -37,6 +41,7 @@ class HomeAtrState extends State with AutomaticKeepAliveClientMixin {
 
     print("initState   ${init++} ");
     _getData();
+    _getBannerata();
     _toSontroller.addListener(() {
       if (_toSontroller.position.pixels ==
           _toSontroller.position.maxScrollExtent) {
@@ -75,7 +80,6 @@ class HomeAtrState extends State with AutomaticKeepAliveClientMixin {
   Widget _getAtrItem(BuildContext context, int index) {
     return index < _listAtrData.length ? _getItem(index) : _getLoadItem(index);
   }
-
 
   /**
    * 收藏按钮
@@ -160,55 +164,89 @@ class HomeAtrState extends State with AutomaticKeepAliveClientMixin {
   }
 
   Widget _getItem(int index) {
-    return GestureDetector(
-        onTap: () {
-          Navigator.pushNamed(
-            context,
-            '/Swebview',
-            arguments: {
-              "title": '${_listAtrData[index].title}',
-              "link": '${_listAtrData[index].link}'
+    return index > 0
+        ? GestureDetector(
+            onTap: () {
+              Navigator.pushNamed(
+                context,
+                '/Swebview',
+                arguments: {
+                  "title": '${_listAtrData[index].title}',
+                  "link": '${_listAtrData[index].link}'
+                },
+              );
             },
-          );
-        },
-        child: Card(
-          elevation: 2,
-          margin: EdgeInsets.only(left: 10, right: 10, top: 10),
-          child: Row(
-            children: <Widget>[
-              _getStar(index),
-              Expanded(
-                  // 占满可用空间
-                  child: Padding(
-                padding: EdgeInsets.only(top: 10, bottom: 10, right: 10),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    _getText(
-                        "${_listAtrData[index].title}", 15, Stytle.C_title),
-                    Row(
-                      textDirection: TextDirection.ltr,
+            child: Card(
+              elevation: 2,
+              margin: EdgeInsets.only(left: 10, right: 10, top: 10),
+              child: Row(
+                children: <Widget>[
+                  _getStar(index),
+                  Expanded(
+                      // 占满可用空间
+                      child: Padding(
+                    padding: EdgeInsets.only(top: 10, bottom: 10, right: 10),
+                    child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        _getText("作者: ", Stytle.F12, Stytle.C_desc),
-                        _getText("${_listAtrData[index].author}", Stytle.F12,
-                            Stytle.C_title),
+                        _getText(
+                            "${_listAtrData[index].title}", 15, Stytle.C_title),
+                        Row(
+                          textDirection: TextDirection.ltr,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            _getText("作者: ", Stytle.F12, Stytle.C_desc),
+                            _getText("${_listAtrData[index].author}",
+                                Stytle.F12, Stytle.C_title),
 //                        _getText("   分类: ", Stytle.F12, Stytle.C_desc),
 //                        _getText("${_listAtrData[index].superChapterName}",
 //                            Stytle.F12, Stytle.C_title),
-                        _getText("   时间: ", Stytle.F12, Stytle.C_desc),
-                        _getText("${_listAtrData[index].niceDate}", Stytle.F12,
-                            Stytle.C_title),
+                            _getText("   时间: ", Stytle.F12, Stytle.C_desc),
+                            _getText("${_listAtrData[index].niceDate}",
+                                Stytle.F12, Stytle.C_title),
+                          ],
+                        ),
                       ],
                     ),
-                  ],
-                ),
-              ))
-            ],
-          ),
-        ));
+                  ))
+                ],
+              ),
+            ))
+        : Center(
+            child: Container(
+              constraints:
+                  BoxConstraints.expand(width: double.infinity, height: 200),
+              alignment: Alignment.center,
+              child: Swiper(
+                viewportFraction: 0.8,
+                scale: 0.9,
+//                     itemWidth、layout 结合使用
+//                itemWidth: 300,
+//                layout: SwiperLayout.STACK,
+                onTap: (index) {
+                  Navigator.pushNamed(
+                    context,
+                    '/Swebview',
+                    arguments: {
+                      "title": '${_listBannerData[index].title}',
+                      "link": '${_listBannerData[index].url}'
+                    },
+                  );
+
+                },
+                autoplay: true,
+                itemBuilder: (BuildContext context, int index) {
+                  return _getBanner(index);
+                },
+                itemCount: _listBannerData.length,
+                pagination: new SwiperPagination(),
+                control: new SwiperControl(
+                    size: 20, iconPrevious: null, iconNext: null),
+              ),
+            ),
+          );
   }
 
   Widget _getText(String content, double fontsize, int color) {
@@ -246,6 +284,30 @@ class HomeAtrState extends State with AutomaticKeepAliveClientMixin {
         ),
       ),
     );
+  }
+
+  Widget _getBanner(int index) {
+    return _listBannerWeiget[index];
+  }
+
+  void _getBannerata() {
+    HttpUtil.get("/banner/json", success: (value) {
+      BannerEntity bannerEntity = EntityFactory.generateOBJ(value);
+//    var data = bannerEntity.data;
+      setState(() {
+        _listBannerData.addAll(bannerEntity.data);
+        if (_listBannerData.length > 0) {
+          _listBannerData.forEach((value) {
+            _listBannerWeiget.add(Image.network(
+              "${value.imagePath}",
+              fit: BoxFit.cover,
+            ));
+          });
+        }
+      });
+    }, error: (msg, code) {
+      Log.i(msg + code);
+    });
   }
 }
 
