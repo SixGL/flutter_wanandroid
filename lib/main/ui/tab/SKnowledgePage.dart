@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 
 import '../../../entity_factory.dart';
+import '../widget.dart';
 
 class KnowledgeContentPage extends StatefulWidget {
   @override
@@ -15,13 +16,14 @@ class KnowledgeContentPage extends StatefulWidget {
 }
 
 class KnowledgeState extends State {
+  GlobalKey<TextState> textKey = GlobalKey();
+
   List<WXAutorData> data = new List();
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-//    _getData();
   }
 
   List<Widget> listBanner = [
@@ -42,48 +44,157 @@ class KnowledgeState extends State {
       fit: BoxFit.cover,
     ),
   ];
+  int tv = 0;
 
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-      appBar: AppBar(
-        title: Text("banner"),
-      ),
-      body: Container(
-        height: 160,
-        child: Swiper(
-//          viewportFraction: 0.8,
-//          scale: 0.9,
-          //     itemWidth、layout 结合使用
-          itemWidth: 300,
-          layout: SwiperLayout.STACK,
-          onTap: (index) {
-            print("${index}");
+      body: NestedScrollView(
+          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+            return <Widget>[
+              SliverAppBar(
+                //展开高度
+                expandedHeight: 150.0,
+                //是否随着滑动隐藏标题
+                floating: false,
+                //是否固定在顶部
+                pinned: true,
+                //可折叠的应用栏
+                flexibleSpace: FlexibleSpaceBar(
+                  centerTitle: true,
+                  title: Text(
+                    '可折叠的组件',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16.0,
+                    ),
+                  ),
+                  background: Image.network(
+                    'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1549129578802&di=f866c638ea12ad13c5d603bcc008a6c2&imgtype=0&src=http%3A%2F%2Fpic2.16pic.com%2F00%2F07%2F66%2F16pic_766297_b.jpg',
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+            ];
           },
-          autoplay: true,
-          itemBuilder: (BuildContext context, int index) {
-            return _getBanner(index);
-          },
-          itemCount: 3,
-          pagination: new SwiperPagination(),
-          control:
-              new SwiperControl(size: 20, iconPrevious: null, iconNext: null),
-        ),
-      ),
+          body: ListView(
+            children: <Widget>[
+              Container(
+                color: Colors.red,
+                height: 100,
+                child: ListTile(
+                  title: Text("List___"),
+                ),
+              ),
+              Container(
+                color: Colors.red,
+                height: 100,
+                child: ListTile(
+                  title: Text("List___"),
+                ),
+              ),Container(
+                color: Colors.red,
+                height: 100,
+                child: ListTile(
+                  title: Text("List___"),
+                ),
+              ),Container(
+                color: Colors.red,
+                height: 100,
+                child: ListTile(
+                  title: Text("List___"),
+                ),
+              ),Container(
+                color: Colors.red,
+                height: 100,
+                child: ListTile(
+                  title: Text("List___"),
+                ),
+              ),Container(
+                color: Colors.red,
+                height: 100,
+                child: ListTile(
+                  title: Text("List___"),
+                ),
+              ),Container(
+                color: Colors.red,
+                height: 100,
+                child: ListTile(
+                  title: Text("List___"),
+                ),
+              ),Container(
+                color: Colors.red,
+                height: 100,
+                child: ListTile(
+                  title: Text("List___"),
+                ),
+              ),Container(
+                color: Colors.red,
+                height: 100,
+                child: ListTile(
+                  title: Text("List___"),
+                ),
+              ),Container(
+                color: Colors.red,
+                height: 100,
+                child: ListTile(
+                  title: Text("List___"),
+                ),
+              ),Container(
+                color: Colors.red,
+                height: 100,
+                child: ListTile(
+                  title: Text("List___"),
+                ),
+              ),Container(
+                color: Colors.red,
+                height: 100,
+                child: ListTile(
+                  title: Text("List___"),
+                ),
+              ),Container(
+                color: Colors.red,
+                height: 100,
+                child: ListTile(
+                  title: Text("List___"),
+                ),
+              ),
+            ],
+          )),
     );
   }
 
-//
-//  TabBar(
-//  labelStyle: TextStyle(fontSize: 16),
-//  unselectedLabelStyle: TextStyle(fontSize: 14),
-//  indicatorSize: TabBarIndicatorSize.label,
-//  isScrollable: true,
-//  tabs: _getTabItem(),
+//  Column(
+//  children: <Widget>[
+//  Container(
+//  height: 160,
+//  child: Swiper(
+////          viewportFraction: 0.8,
+////          scale: 0.9,
+//  //     itemWidth、layout 结合使用
+//  itemWidth: 300,
+//  layout: SwiperLayout.STACK,
+//  onTap: (index) {
+//  print("${index}");
+//  },
+//  autoplay: true,
+//  itemBuilder: (BuildContext context, int index) {
+//  return _getBanner(index);
+//  },
+//  itemCount: 3,
+//  pagination: new SwiperPagination(),
+//  control: new SwiperControl(
+//  size: 20, iconPrevious: null, iconNext: null),
 //  ),
-//  TabBarView(children: _getTabItem(index: 2)),
-
+//  ),
+//  TextWidegt(textKey),
+//  RaisedButton(onPressed: () {
+//  tv++;
+//  textKey.currentState.onPressed(tv);
+//  })
+//  ],
+//  )
   /**
    * todo
    * */

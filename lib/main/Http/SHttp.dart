@@ -27,7 +27,7 @@ class HttpUtil {
       Map<String, dynamic> headers,
       Function success,
       Function error}) async {
-    _request(url, Http.POST, success,
+   await _request(url, Http.POST, success,
         data: data, headers: headers, error: error);
   }
 

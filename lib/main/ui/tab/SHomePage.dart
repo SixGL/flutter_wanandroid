@@ -1,4 +1,5 @@
 import 'package:first_flutter_app/main/Http/SHttp.dart';
+import 'package:first_flutter_app/main/Http/SLog.dart';
 import 'package:flutter/material.dart';
 
 import 'hometab/SHomeHotAtrPage.dart';
@@ -17,24 +18,28 @@ List _listTitle = ["热门文章", "热门项目"];
 
 class HomeState extends State {
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return DefaultTabController(
         length: _listTitle.length,
         child: Scaffold(
-
-          appBar: AppBar(
-            textTheme: TextTheme(),
-            elevation: 0,
+            appBar: AppBar(
+              textTheme: TextTheme(),
+              elevation: 0,
 //            leading: _getHeadIm(),
-            title: TabBar(
-                labelStyle: TextStyle(fontSize: 16),
-                unselectedLabelStyle: TextStyle(fontSize: 14),
-                indicatorSize: TabBarIndicatorSize.label,
-                tabs: [_getTabTitle(0), _getTabTitle(1)]),
-          ),
-          body: _getTabView(),
-        ));
+              title: TabBar(
+                  labelStyle: TextStyle(fontSize: 16),
+                  unselectedLabelStyle: TextStyle(fontSize: 14),
+                  indicatorSize: TabBarIndicatorSize.label,
+                  tabs: [_getTabTitle(0), _getTabTitle(1)]),
+            ),
+            body: _getTabView()));
   }
 }
 

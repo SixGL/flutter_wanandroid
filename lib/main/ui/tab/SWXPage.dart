@@ -14,6 +14,9 @@ class WXContentPage extends StatefulWidget {
 }
 
 class WXState extends State {
+  WXState(){
+    Log.i("构造____WXState");
+  }
   List<WXAutorData> data = new List();
 
   @override

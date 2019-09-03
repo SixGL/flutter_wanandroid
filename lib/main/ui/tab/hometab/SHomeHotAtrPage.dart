@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 
 class HomeAtrContentPage extends StatefulWidget {
+
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
@@ -16,7 +17,12 @@ class HomeAtrContentPage extends StatefulWidget {
 }
 
 //AutomaticKeepAliveClientMixin 解决Tab切换状态丢失问题
-class HomeAtrState extends State with AutomaticKeepAliveClientMixin {
+class HomeAtrState extends State with AutomaticKeepAliveClientMixin{
+
+
+  HomeAtrState(){
+    Log.i("构造____HomeAtrState");
+  }
   @override
   // TODO: implement wantKeepAlive
   bool get wantKeepAlive => true;
@@ -38,7 +44,7 @@ class HomeAtrState extends State with AutomaticKeepAliveClientMixin {
   void initState() {
     // TODO: implement initState
     super.initState();
-
+    Log.i("性能——————HomeAtrState ");
     print("initState   ${init++} ");
     _getData();
     _getBannerata();
@@ -129,7 +135,7 @@ class HomeAtrState extends State with AutomaticKeepAliveClientMixin {
   /**
    * todo
    * */
-  List<AtrBeanDataData> _getData() {
+  Future<List<AtrBeanDataData>> _getData() async{
     HttpUtil.get("article/list/$_curPageIndex/json", success: (value) {
       AtrBeanEntity generateOBJ = EntityFactory.generateOBJ(value);
       List<AtrBeanDataData> list = generateOBJ.data.datas;
